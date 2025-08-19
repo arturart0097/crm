@@ -1,0 +1,22 @@
+.customButton {
+  display: flex;
+  padding: 16px 0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background: var(--CTA, #ba83ff);
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.6px;
+  border: none;
+  cursor: pointer;
+}
+
+.customButton:hover {
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}

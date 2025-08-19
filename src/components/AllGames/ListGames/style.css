@@ -1,0 +1,12 @@
+.list-title {
+  margin-bottom: 20px;
+}
+
+.list-title > h2 {
+  color: #ba83ff;
+  font-family: Syne;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

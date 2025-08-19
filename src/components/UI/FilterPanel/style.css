@@ -1,0 +1,98 @@
+/* components/filters.css */
+:root {
+  --bg: #0b0d12;
+  --pill: #10141f;
+  --border: #2a3042;
+  --text: #e6e8ee;
+  --muted: #8b94a7;
+  --accent: #a78bfa; /* фіолетовий для фокусу */
+}
+
+.filters {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.field-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  color: rgba(217, 217, 217, 0.9);
+  font-family: Syne;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.select {
+  position: relative;
+  min-width: 220px;
+}
+
+.select select {
+  display: flex;
+  width: 268px;
+  height: 55px;
+  padding: 16px 24px;
+  align-items: center;
+  gap: 110px;
+
+  border-radius: 30px;
+  border: 1px solid #3d3d3d;
+  background: rgba(26, 27, 31, 0.4);
+  backdrop-filter: blur(50px);
+
+  color: rgba(255, 255, 255, 0.9);
+  font-family: Syne;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  /* ховаємо дефолтну стрілку */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* кастомна стрілка */
+.select::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  background: no-repeat center/12px 12px
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23E6E8EE' d='M7 10l5 5 5-5z'/></svg>");
+}
+
+/* фокус */
+.select select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 60%, transparent);
+  border-color: var(--accent);
+}
+
+.header-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.header-filter > h2 {
+  color: #ba83ff;
+  font-family: Syne;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

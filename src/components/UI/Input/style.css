@@ -1,0 +1,73 @@
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-container img {
+  position: absolute;
+  left: 24px;
+  top: 16px;
+  width: 24px;
+  height: 24px;
+  z-index: 1;
+  filter: brightness(0) saturate(100%) invert(65%) sepia(0%) saturate(0%)
+    hue-rotate(93deg) brightness(89%) contrast(86%);
+}
+
+.input-container input {
+  width: 314px;
+  padding: 16px 24px 16px 56px;
+  border-radius: 30px;
+  border: 1px solid rgba(251, 255, 255, 0.1);
+  background: rgba(26, 27, 31, 0.4);
+  backdrop-filter: blur(50px);
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input-container input.error {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}
+
+.input-container input::placeholder {
+  color: #9ca3af;
+  font-family: Syne;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.input-container input:focus {
+  border-color: rgba(251, 255, 255, 0.3);
+  box-shadow: 0 0 0 2px rgba(251, 255, 255, 0.1);
+}
+
+.input-container input.error:focus {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.3);
+}
+
+.input-container .error-message {
+  color: #ff6b6b;
+  font-size: 12px;
+  font-family: Inter;
+  margin-left: 16px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

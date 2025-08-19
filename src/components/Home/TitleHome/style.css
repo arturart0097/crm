@@ -1,0 +1,7 @@
+.title-home > h1 {
+  text-align: left;
+}
+
+.title-home span {
+  color: var(--CTA, #ba83ff);
+}

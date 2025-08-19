@@ -1,0 +1,13 @@
+.main {
+  flex: 1;
+  height: 85vh;
+  width: 100%;
+  margin: 0 auto;
+  background-image: url("../../../assets/bg/bg.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

@@ -1,0 +1,141 @@
+header {
+  background-color: #000000;
+  color: white;
+  padding: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  padding: 30px;
+}
+
+.header-admin {
+  width: 80vw;
+  margin-left: 5vw;
+}
+
+.nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+  background-color: #34495e;
+}
+
+.logo-text {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #fff;
+  font-family: Syne;
+  font-size: 27.632px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -1.658px;
+  cursor: pointer;
+}
+
+.user-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  height: 52px;
+  gap: 22px;
+}
+
+.notification {
+  width: 32px;
+  height: 34px;
+}
+
+.user-logo {
+  width: 52px;
+  height: 52px;
+  aspect-ratio: 1/1;
+  border-radius: 50px;
+  border: 2px solid var(--j-djlrf, rgb(77, 77, 77));
+}
+
+.user-wrapper p {
+  margin-top: 0;
+  color: #fff;
+  font-family: Unbounded;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.user-wrapper span {
+  color: #fff;
+  font-family: Syne;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.user-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.user-info:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: scale(1.02);
+}
+
+.headerfunc-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
+}
+
+/* Make notification icon clickable */
+.notification {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.notification:hover {
+  transform: scale(1.1);
+}
+
+.left-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+}

@@ -1,0 +1,17 @@
+.title_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.title_wrapper span {
+  color: var(--CTA, #ba83ff);
+  font-family: Unbounded;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.96px;
+}
