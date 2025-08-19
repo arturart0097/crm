@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import logo from "@/assets/icons/logo.svg";
+import showModal from "@/assets/icons/showModal.svg";
 
 import "./style.css";
 
@@ -17,6 +18,7 @@ export const Aside = ({
   style,
 }) => {
   const { pathname } = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const defaultSections = [
     { label: "Dashboard", to: "/home" },
@@ -56,7 +58,20 @@ export const Aside = ({
   };
 
   return (
-    <aside className={`aside ${className}`} style={style}>
+    <aside
+      className={`aside ${isCollapsed ? "collapsed" : ""} ${className}`}
+      style={style}
+    >
+      <header className="aside-header">
+        <button
+          className="collapse-toggle"
+          type="button"
+          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          onClick={() => setIsCollapsed((v) => !v)}
+        >
+          <img src={showModal} alt="showModal" />
+        </button>
+      </header>
       <nav className="aside-nav">
         {items.map((section, idx) => (
           <div className="aside-section" key={`${section.label}-${idx}`}>
