@@ -21,7 +21,7 @@ export const Header = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const headerFunc =
-    pathname === "/home" ||
+    pathname === "/" ||
     pathname === "/listgames" ||
     pathname.includes("/game/") ||
     pathname === "/listadmins" ||
@@ -57,7 +57,7 @@ export const Header = () => {
     <>
       <header>
         {!headerFunc ? (
-          <div className="logo-text" onClick={() => navigate("/")}>
+          <div className="logo-text">
             <img src={logo} alt="logo" />
             <span>GameGPT</span>
           </div>

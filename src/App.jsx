@@ -1,6 +1,7 @@
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/pages/LoginPage";
-import { Route, Routes } from "react-router-dom";
+import { usePrivy } from "@privy-io/react-auth";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import Layout from "@/components/Layout";
 
@@ -11,17 +12,68 @@ import GamePage from "./pages/GamePage";
 import SubAdminsPage from "./pages/SubAdminsPage";
 import UsersPage from "./pages/UsersPage";
 
+function ProtectedRoute({ children }) {
+  const { authenticated } = usePrivy();
+  if (!authenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+}
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/listgames" element={<AllGamesPage />} />
-        <Route path="/listgames/game/:id" element={<GamePage />} />
-        <Route path="/listadmins" element={<AdminsPage />} />
-        <Route path="/listsubadmins" element={<SubAdminsPage />} />
-        <Route path="/listusers" element={<UsersPage />} />
+        {/* <Route index element={<LoginPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          index
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/listgames"
+          element={
+            <ProtectedRoute>
+              <AllGamesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/listgames/game/:id"
+          element={
+            <ProtectedRoute>
+              <GamePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/listadmins"
+          element={
+            <ProtectedRoute>
+              <AdminsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/listsubadmins"
+          element={
+            <ProtectedRoute>
+              <SubAdminsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/listusers"
+          element={
+            <ProtectedRoute>
+              <UsersPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>

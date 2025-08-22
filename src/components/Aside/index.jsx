@@ -21,7 +21,7 @@ export const Aside = ({
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const defaultSections = [
-    { label: "Dashboard", to: "/home" },
+    { label: "Dashboard", to: "/" },
     {
       label: "Games",
       children: [

@@ -5,7 +5,7 @@ import { Button } from "@/components/UI/Button";
 import "./style.css";
 
 export default function ErrorPage() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="main">
@@ -16,7 +16,7 @@ export default function ErrorPage() {
           style={{
             width: 374,
           }}
-          // onClick={() => navigate("/home")}
+          onClick={() => navigate("/")}
         >
           Back To Main
         </Button>

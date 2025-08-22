@@ -9,7 +9,7 @@ export default function Layout() {
   const { pathname } = useLocation();
 
   const showAside =
-    pathname === "/home" ||
+    pathname === "/" ||
     pathname === "/listgames" ||
     pathname.includes("/game/") ||
     pathname === "/listadmins" ||
