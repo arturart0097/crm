@@ -4,7 +4,13 @@ import { CodeViewer } from "@/components/UI/CodeViewer";
 
 import "./style.css";
 
+function normalizeCodeBlock(input) {
+  return input.replace(/^```html\s*/m, "").replace(/\s*```$/m, "");
+}
+
 export const RightPanel = ({ code, assets }) => {
+  const normalizeCode = normalizeCodeBlock(code);
+
   return (
     <div className="right-panel">
       <Tab.Group>
@@ -24,7 +30,7 @@ export const RightPanel = ({ code, assets }) => {
           <Tab.Panel>
             <div className="panel">
               <pre className="code-block">
-                <CodeViewer code={code} />
+                <CodeViewer code={normalizeCode} />
               </pre>
               <div className="panel-gradient" />
             </div>
@@ -34,7 +40,7 @@ export const RightPanel = ({ code, assets }) => {
             <div className="panel">
               <iframe
                 title={`game`}
-                srcDoc={code}
+                srcDoc={normalizeCode}
                 sandbox="allow-scripts"
                 style={{
                   width: "100%",
@@ -50,9 +56,17 @@ export const RightPanel = ({ code, assets }) => {
           <Tab.Panel>
             <div className="panel">
               <div className="assets-block">
-                {assets.map((img) => (
-                  <img src={img} loading="lazy" alt="assets" />
-                ))}
+                {Array.isArray(assets) &&
+                  assets.length > 0 &&
+                  assets.map((src, i) => (
+                    <img
+                      key={src || i}
+                      src={typeof src === "string" ? src : src?.url || src?.src}
+                      loading="lazy"
+                      decoding="async"
+                      alt="asset"
+                    />
+                  ))}
               </div>
               <div className="panel-gradient" />
             </div>

@@ -14,7 +14,9 @@ export default function Layout() {
     pathname.includes("/game/") ||
     pathname === "/listadmins" ||
     pathname === "/listsubadmins" ||
-    pathname === "/listusers";
+    pathname === "/listusers" ||
+    pathname === "/approved" ||
+    pathname === "/disapproved" ;
 
   return (
     <div

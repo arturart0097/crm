@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router";
 
 import done from "@/assets/icons/done.svg";
+import err from "@/assets/icons/err.svg";
 
 import "./style.css";
 
 export const Game = ({ cover, name, aiModel, integrate, details, id }) => {
   const navigate = useNavigate();
+
+  console.log(details, "---1");
 
   return (
     <div className="game" onClick={() => navigate(`/listgames/game/${id}`)}>
@@ -21,17 +24,24 @@ export const Game = ({ cover, name, aiModel, integrate, details, id }) => {
       <div className="game-info">
         <p>Integrate</p>
         <div className="game-info-dot">
-          <p>{integrate ? "Check" : "Check"}</p>
-          <img src={done} alt="done" />
+          <p>{integrate ? "Check" : "No Check"}</p>
+          <img
+            src={integrate ? done : err}
+            alt={integrate ? "done" : "No Check"}
+          />
         </div>
       </div>
-      <div className="game-info">
-        <p>Details</p>
-        <div className="game-info-dot">
-          <p>{details ? "Done" : "Done"}</p>
-          <img src={done} alt="done" />
+      {details ? (
+        <div />
+      ) : (
+        <div className="game-info">
+          <p>Details</p>
+          <div className="game-info-dot">
+            <p>{details ? "Done" : "Done"}</p>
+            <img src={done} alt="done" />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

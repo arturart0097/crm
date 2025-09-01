@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+import { patchGameApprove } from "@/api/patchGameApprove";
+import { usePrivy } from "@privy-io/react-auth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { Button } from "@/components/UI/Button";
 import { Modal } from "@/components/UI/Modal";
 
@@ -11,14 +15,49 @@ import "./style.css";
 export const LeftCard = ({ game }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [comment, setComment] = useState("");
+  const { getAccessToken } = usePrivy();
+  const queryClient = useQueryClient();
 
-  const entries = Object.entries(game.integrations);
+  const approveMutation = useMutation({
+    mutationFn: patchGameApprove(getAccessToken, {
+      game_id: game.id,
+      approval: "approved",
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["approved-projects"] });
+      queryClient.invalidateQueries({ queryKey: ["disapproved-projects"] });
+    },
+    onError: (error) => {
+      console.error("Failed to approve game:", error);
+    },
+  });
+
+  const disapproveMutation = useMutation({
+    mutationFn: patchGameApprove(getAccessToken, {
+      game_id: game.id,
+      approval: "rejected",
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["approved-projects"] });
+      queryClient.invalidateQueries({ queryKey: ["disapproved-projects"] });
+      setIsOpen(false);
+      setComment("");
+    },
+    onError: (error) => {
+      console.error("Failed to disapprove game:", error);
+    },
+  });
+
+  const handleApprove = () => {
+    approveMutation.mutate();
+  };
 
   const sendCommentHandler = () => {
-    // use current comment
-    console.log("send comment:", comment);
-    setIsOpen(false);
-    setComment("");
+    if (comment.trim()) {
+      disapproveMutation.mutate();
+    }
   };
 
   function open() {
@@ -26,7 +65,9 @@ export const LeftCard = ({ game }) => {
   }
 
   function close() {
-    setIsOpen(false);
+    if (!approveMutation.isPending && !disapproveMutation.isPending) {
+      setIsOpen(false);
+    }
   }
 
   return (
@@ -34,42 +75,89 @@ export const LeftCard = ({ game }) => {
       <div className="left-card">
         <div className="field">
           <p className="field-title">Name</p>
-          <p className="field-value">{game.name}</p>
+          <p className="field-value">{game.title}</p>
         </div>
 
         <div className="field">
           <p className="field-title">AI Code Generation Model</p>
-          <p className="field-value">{game.aiModel}</p>
+          <p className="field-value">{game.ai_model}</p>
         </div>
 
-        <div className="field">
-          <p className="field-title">Prompt</p>
-          <p className="field-description">{game.prompt}</p>
-        </div>
+        {game.details ? (
+          <div />
+        ) : (
+          <div className="field">
+            <p className="field-title">Prompt</p>
+            <p className="field-description">
+              {!game.details.prompt ? "no prompt" : game.details.prompt}
+            </p>
+          </div>
+        )}
 
         <div className="field">
           <p className="field-title">Integrate with GameGPT</p>
           <ul className="integrations">
-            {entries.map(([k, item]) => (
-              <li key={k} className="integration-item">
-                <div className="integration-left">
-                  <img
-                    src={item.done ? gameDone : gameUnDone}
-                    alt={item.done ? "done" : "not done"}
-                  />
-                  <span className="integration-label">
-                    {item.label} ({item.note})
-                  </span>
-                </div>
-              </li>
-            ))}
+            <li className="integration-item">
+              <div className="integration-left">
+                <img
+                  src={game.integrate.integrate ? gameDone : gameUnDone}
+                  alt={game.integrate.integrate ? "done" : "not done"}
+                />
+                <span className="integration-label">
+                  Ready Check (ready event)
+                </span>
+              </div>
+            </li>
+            <li className="integration-item">
+              <div className="integration-left">
+                <img
+                  src={game.integrate.gameOver ? gameDone : gameUnDone}
+                  alt={game.integrate.gameOver ? "done" : "not done"}
+                />
+                <span className="integration-label">
+                  Score Reported (game over event)
+                </span>
+              </div>
+            </li>
+            <li className="integration-item">
+              <div className="integration-left">
+                <img
+                  src={game.integrate.playAgain ? gameDone : gameUnDone}
+                  alt={game.integrate.playAgain ? "done" : "not done"}
+                />
+                <span className="integration-label">
+                  Play again implemented (play again handler)
+                </span>
+              </div>
+            </li>
+            <li className="integration-item">
+              <div className="integration-left">
+                <img
+                  src={game.integrate.wagerHandler ? gameDone : gameUnDone}
+                  alt={game.integrate.wagerHandler ? "done" : "not done"}
+                />
+                <span className="integration-label">
+                  Wagering implemented (wager handler)
+                </span>
+              </div>
+            </li>
           </ul>
         </div>
 
         <div className="actions">
-          <Button style={{ width: 374 }}>Approve</Button>
-          <button className="disapprove" onClick={open}>
-            Disapprove
+          <Button
+            style={{ width: 374 }}
+            onClick={handleApprove}
+            disabled={approveMutation.isPending}
+          >
+            {approveMutation.isPending ? "Approving..." : "Approve"}
+          </Button>
+          <button
+            className="disapprove"
+            onClick={open}
+            disabled={disapproveMutation.isPending}
+          >
+            {disapproveMutation.isPending ? "Disapproving..." : "Disapprove"}
           </button>
         </div>
 
@@ -87,8 +175,9 @@ export const LeftCard = ({ game }) => {
           style={{ width: 374 }}
           type="button"
           onClick={sendCommentHandler}
+          disabled={disapproveMutation.isPending}
         >
-          Send
+          {disapproveMutation.isPending ? "Sending..." : "Send"}
         </Button>
         <button className="modal-close" type="button" onClick={close}>
           Close

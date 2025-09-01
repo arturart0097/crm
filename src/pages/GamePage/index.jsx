@@ -1,4 +1,7 @@
+import { getProjectsQueryOptions } from "@/api/projectsQuery";
 import { mockGames } from "@/mocks/games";
+import { usePrivy } from "@privy-io/react-auth";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router";
 
 import { LeftCard } from "@/components/Game/LeftCard";
@@ -11,8 +14,13 @@ import "./style.css";
 export default function GamePage() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { getAccessToken, authenticated } = usePrivy();
 
-  const currentGame = mockGames.find((game) => game.id === id);
+  const { data: listGames, isLoading } = useQuery(
+    getProjectsQueryOptions(getAccessToken, authenticated),
+  );
+
+  const currentGame = listGames?.find((game) => game.id == id);
 
   return (
     <div className="game-page">
@@ -21,11 +29,8 @@ export default function GamePage() {
       </button>
 
       <div className="game-grid">
-        {/* Left card */}
         <LeftCard game={currentGame} />
-
-        {/* Right panel */}
-        <RightPanel code={currentGame.code} assets={currentGame.assets} />
+        <RightPanel code={currentGame?.code} assets={currentGame?.assets} />
       </div>
     </div>
   );

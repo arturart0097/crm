@@ -26,8 +26,8 @@ export const Aside = ({
       label: "Games",
       children: [
         { label: "All games", to: "/listgames" },
-        { label: "Approved" },
-        { label: "Disapproved" },
+        { label: "Approved", to: "/approved" },
+        { label: "Disapproved", to: "/disapproved" },
       ],
     },
     {

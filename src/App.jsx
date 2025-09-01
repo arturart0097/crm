@@ -51,6 +51,22 @@ function App() {
           }
         />
         <Route
+          path="/approved"
+          element={
+            <ProtectedRoute>
+              <AllGamesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/disapproved"
+          element={
+            <ProtectedRoute>
+              <AllGamesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/listadmins"
           element={
             <ProtectedRoute>
