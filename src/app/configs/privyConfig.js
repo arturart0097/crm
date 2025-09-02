@@ -6,7 +6,7 @@ export const privyClientConfig = {
   embeddedWallets: {
     createOnLogin: "off",
   },
-  supportedChains: [sepolia],
+  // supportedChains: [sepolia],
   loginMethods: ["wallet", "email", "google"],
   appearance: {
     showWalletLoginFirst: true,

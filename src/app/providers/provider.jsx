@@ -1,7 +1,7 @@
 import { PrivyProvider } from "@privy-io/react-auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { base } from "viem/chains";
+import { base, sepolia } from "viem/chains";
 
 import { privyClientConfig } from "../configs/privyConfig";
 
@@ -11,7 +11,7 @@ export default function Provider({ children }) {
   return (
     <PrivyProvider
       appId={appId}
-      config={{ ...privyClientConfig, defaultChain: base }}
+      config={{ ...privyClientConfig, defaultChain: base, supportedChains: sepolia }}
     >
       <QueryClientProvider client={queryClient}>
         {children}
