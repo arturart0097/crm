@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { getApprovedGame } from "@/api/getApprovedGame";
 import { getDisapproveGame } from "@/api/getDisapproveGame";
 import { getProjectsQueryOptions } from "@/api/projectsQuery";
-import { mockGames } from "@/mocks/games";
 import { usePrivy } from "@privy-io/react-auth";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router";
@@ -28,6 +27,8 @@ export const ListGames = () => {
   const { data: listGamesDisapproved, isLoading: isLoadingDisapproved } =
     useQuery(getDisapproveGame(getAccessToken, authenticated));
 
+  console.log(listGamesDisapproved);
+
   useEffect(() => {
     if (pathname === "/approved") {
       setTypeGames("approved");
@@ -44,9 +45,9 @@ export const ListGames = () => {
         <h2>
           {typeGames === "all"
             ? `All Games (${listGames?.length || 0})`
-            : typeGames === "approved"}
-          {/* ? `Approved Games (${listGamesApproved?.length || 0})`
-              : `Disapproved Games (${listGamesDisapproved?.length || 0})`} */}
+            : typeGames === "approved"
+              ? `Approved Games (${listGamesApproved?.length || 0})`
+              : `Disapproved Games (${listGamesDisapproved?.length || 0})`}
         </h2>
       </div>
 
@@ -74,7 +75,7 @@ export const ListGames = () => {
                 id={game.id}
               />
             ))
-          : []?.map((game) => (
+          : listGamesDisapproved?.map((game) => (
               <Game
                 key={game.id}
                 cover={game.thumbnail}
