@@ -31,12 +31,12 @@ export const Form = () => {
   //   password: "",
   // });
   // const [errors, setErrors] = useState({});
-  const { login, user, authenticated } = usePrivy();
+  const { login, user, authenticated, ready } = usePrivy();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      await login();
+      if (ready) await login();
     } catch (err) {
       console.error("Login failed:", err);
     }
