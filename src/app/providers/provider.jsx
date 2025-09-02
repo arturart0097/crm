@@ -11,7 +11,11 @@ export default function Provider({ children }) {
   return (
     <PrivyProvider
       appId={appId}
-      config={{ ...privyClientConfig, defaultChain: base, supportedChains: sepolia }}
+      config={{
+        ...privyClientConfig,
+        defaultChain: sepolia,
+        supportedChains: [sepolia],
+      }}
     >
       <QueryClientProvider client={queryClient}>
         {children}
